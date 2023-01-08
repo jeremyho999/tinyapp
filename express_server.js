@@ -3,6 +3,7 @@ const app = express();
 const PORT = 8080;  // default port 8080
 
 app.set('view engine', 'ejs');
+// use Express library's body parsing middleware to make the POST request body human readable:
 app.use(express.urlencoded({ extended: true }));
 
 const urlDatabase = {
@@ -15,9 +16,15 @@ app.get('/urls', (req, res) => {
   res.render('urls_index', templateVars);
 });
 
-// add a GET route to show the form in "/views/urls_new.ejs"
+// add a GET route to show the form in "/views/urls_new.ejs":
 app.get('/urls/new', (req, res) => {
   res.render('urls_new');
+});
+
+// add a POST route to receive the form submission:
+app.post('/urls', (req, res) => {
+  console.log(req.body);
+  res.send('Ok');
 });
 
 app.get('/urls/:id', (req, res) => {
