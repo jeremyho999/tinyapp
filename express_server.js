@@ -11,6 +11,16 @@ const urlDatabase = {
   '9sm5xK': 'http://www.google.com'
 };
 
+// 6-random-alphanumeric-character unique short URL ID generator:
+const generateRandomString = () => {
+  let randomStr = '';
+  const givenStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  for (let i = 0; i < 6; i++) {
+    randomStr += givenStr.charAt(Math.floor(Math.random() * givenStr.length));
+  }
+  return randomStr;
+};
+
 app.get('/urls', (req, res) => {
   const templateVars = { urls: urlDatabase };
   res.render('urls_index', templateVars);
