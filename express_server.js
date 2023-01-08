@@ -48,6 +48,14 @@ app.post('/urls/:id/delete', (req, res) => {
   res.redirect('/urls');
 });
 
+// add a POST route to update a URL resource and redirect the client back to '/urls':
+app.post('/urls/:id', (req, res) => {
+  const id = req.params.id;
+  const longURL = req.body.newURL;
+  urlDatabase[id] = longURL;
+  res.redirect('/urls');
+});
+
 // add "/urls/:id" route and template:
 app.get('/urls/:id', (req, res) => {
   const templateVars = { id: req.params.id, longURL: urlDatabase[req.params.id]};
