@@ -58,6 +58,13 @@ app.post('/urls/:id', (req, res) => {
   res.redirect('/urls');
 });
 
+// add an endpoint to handle a POST to /login:
+app.post('/login', (req, res) => {
+  res.cookie('username', req.body.username);
+  //console.log(req.body);
+  res.redirect('urls');
+});
+
 // add "/urls/:id" route and template:
 app.get('/urls/:id', (req, res) => {
   const templateVars = { id: req.params.id, longURL: urlDatabase[req.params.id]};
