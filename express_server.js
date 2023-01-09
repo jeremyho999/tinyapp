@@ -1,10 +1,12 @@
 const express = require('express');
 const app = express();
 const PORT = 8080;  // default port 8080
+const cookieParser = require('cookie-parser');
 
 app.set('view engine', 'ejs');    // set "ejs" as the view engine
 // use Express library's body parsing middleware to make the POST request body human readable:
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 const urlDatabase = {
   'b2xVn2': 'http://www.lighthouselabs.ca',
