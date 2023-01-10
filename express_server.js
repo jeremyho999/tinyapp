@@ -63,7 +63,13 @@ app.post('/urls/:id', (req, res) => {
 app.post('/login', (req, res) => {
   res.cookie('username', req.body.username);
   //console.log(req.body);
-  res.redirect('urls');
+  res.redirect('/urls');
+});
+
+// add an endpoint to handle a POST to /logout:
+app.post('/logout', (req, res) => {
+  res.clearCookie('username');
+  res.redirect('/urls');
 });
 
 // add "/urls/:id" route and template:
