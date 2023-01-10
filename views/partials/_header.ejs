@@ -18,7 +18,6 @@
         <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
       </div>
     </div>
-
     <form class="form-inline" method="POST" action="/login">
       <div class="form-group mb-2">
         <label for="username">Username:</label>
@@ -26,5 +25,11 @@
         <button type="submit" class="btn btn-primary" id="userinput">Submit</button>
       </div>
     </form>
+
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <h5>   Logged In As: <%= username %></h5>
+      </div>
+    </div>
   </nav>
 </header>
