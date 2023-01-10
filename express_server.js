@@ -13,6 +13,20 @@ const urlDatabase = {
   '9sm5xK': 'http://www.google.com'
 };
 
+// create a global "users" object to store and access the users in the app:
+const users = {
+  userRandomID: {
+    id: 'userRandomID',
+    email: 'user@example.com',
+    password: "purple-monkey-dinosaur",
+  },
+  user2RandomID: {
+    id: "user2RandomID",
+    email: "user2@example.com",
+    password: "dishwasher-funk",
+  },
+};
+
 // 6-random-alphanumeric-character unique short URL ID generator:
 const generateRandomString = () => {
   let randomStr = '';
@@ -31,7 +45,7 @@ app.get('/urls', (req, res) => {
 
 // add a GET route to show the form in "/views/urls_new.ejs":
 app.get('/urls/new', (req, res) => {
-  const templateVars = { username: req.cookies["username"] }
+  const templateVars = { username: req.cookies["username"] };
   res.render('urls_new', templateVars);
 });
 
@@ -72,9 +86,20 @@ app.post('/logout', (req, res) => {
   res.redirect('/urls');
 });
 
+// create an endpoint to handle the registration form data:
+app.post('/register', (req, res) => {
+  const user3RandomID = generateRandomString();
+  const id = user3RandomID;
+  const email = req.body.email;
+  const password = req.body.password;
+  users[user3RandomID] = { id, email, password };
+  res.cookie('user_id', user3RandomID);
+  res.redirect('/urls');
+});
+
 // add "/register" route and template:
 app.get('/register', (req, res) => {
-  const templateVars = { username: req.cookies["username"] }
+  const templateVars = { username: req.cookies["username"] };
   res.render('urls_registration', templateVars);
 });
 
