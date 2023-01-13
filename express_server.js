@@ -37,6 +37,14 @@ const generateRandomString = () => {
   return randomStr;
 };
 
+// user lookup helper function:
+const findUserByEmail = (inputEmail, database) => {
+  for (const key in database) {
+    if (database[key].email === inputEmail) return database[key];
+  }
+  return null;
+};
+
 // add "/urls" route and template:
 app.get('/urls', (req, res) => {
   const user_id = req.cookies["user_id"];
@@ -92,11 +100,23 @@ app.post('/logout', (req, res) => {
 
 // create an endpoint to handle the registration form data:
 app.post('/register', (req, res) => {
-  const user3RandomID = generateRandomString();
-  const id = user3RandomID;
   const email = req.body.email;
   const password = req.body.password;
+
+  if (findUserByEmail(email, users)) {
+    res.status(400).send(`Error: 400, Email already exists <a href="/register">Go to Registration Page to Try Again</a>`);
+    return;
+  }
+
+  if (email === '' || password === '') {
+    res.status(400).send(`Error: 400, Email and Password cannot be empty <a href="/register">Go to Registration Page</a>`);
+    return;
+  }
+
+  const user3RandomID = generateRandomString();
+  const id = user3RandomID;
   users[user3RandomID] = { id, email, password };
+  console.log(users);
   res.cookie('user_id', user3RandomID);
   res.redirect('/urls');
 });
