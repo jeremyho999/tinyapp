@@ -87,12 +87,22 @@ app.post('/urls/:id', (req, res) => {
 
 // add an endpoint to handle a POST to /login:
 app.post('/login', (req, res) => {
-  res.cookie('username', req.body.username);
-  //console.log(req.body);
-  res.redirect('/urls');
+  const email = req.body.email;
+  const password = req.body.password;
+  if (!findUserByEmail(email, users)) {
+    res.status(403).send(`Error: 403, Email does not exist. <a href="/login">Go to Login Page to Try Again</a>`);
+  } else {
+    const user = findUserByEmail(email, users);
+    if (user.password !== password) {
+      res.status(403).send(`Error: 403, Password does not match. <a href="/login">Go to Login Page to Try Again</a>`);
+    } else {
+      res.cookie('user_id', user.id);
+      res.redirect('/urls');
+    }
+  }
 });
 
-// add "/register" route and template:
+// add "/login" route and template:
 app.get('/login', (req, res) => {
   const user_id = req.cookies["user_id"];
   const user = users[user_id];
@@ -102,8 +112,8 @@ app.get('/login', (req, res) => {
 
 // add an endpoint to handle a POST to /logout:
 app.post('/logout', (req, res) => {
-  res.clearCookie('username');
-  res.redirect('/urls');
+  res.clearCookie('user_id');
+  res.redirect('/login');
 });
 
 // create an endpoint to handle the registration form data:
