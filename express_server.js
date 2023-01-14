@@ -92,6 +92,14 @@ app.post('/login', (req, res) => {
   res.redirect('/urls');
 });
 
+// add "/register" route and template:
+app.get('/login', (req, res) => {
+  const user_id = req.cookies["user_id"];
+  const user = users[user_id];
+  const templateVars = { user };
+  res.render('urls_login', templateVars);
+});
+
 // add an endpoint to handle a POST to /logout:
 app.post('/logout', (req, res) => {
   res.clearCookie('username');
